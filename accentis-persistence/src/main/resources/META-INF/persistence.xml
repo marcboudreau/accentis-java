@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence persistence_2_0.xsd">
+	<persistence-unit name="accentis">
+		<description></description>
+		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+		<class>ca.msbsoftware.accentis.persistence.pojos.BaseObject</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.NamedObject</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.Account</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.Category</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.Individual</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.Institution</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.Payee</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.Transaction</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.TransactionDetail</class>
+		<properties>
+			<!-- property name="openjpa.ConnectionURL" value="jdbc:derby:accentis;create=true"/-->
+			<property name="openjpa.ConnectionDriverName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+			<property name="openjpa.ConnectionUserName" value="sa"/>
+			<property name="openjpa.ConnectionPassword" value="sa"/>
+			<property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO"/>
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema"/>
+			<property name="openjpa.DynamicEnhancementAgent" value="false"/>
+		</properties>
+	</persistence-unit>
+</persistence>
