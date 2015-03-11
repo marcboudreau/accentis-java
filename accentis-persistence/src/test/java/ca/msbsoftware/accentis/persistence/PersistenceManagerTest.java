@@ -1,16 +1,10 @@
 package ca.msbsoftware.accentis.persistence;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,11 +19,7 @@ public class PersistenceManagerTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("openjpa.ConnectionURL", "jdbc:derby:memory:accentis;create=true");
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("accentis", map);
-		
-		manager = new PersistenceManager(factory);
+		manager = new MemoryPersistenceManager();
 	}
 	
 	@After

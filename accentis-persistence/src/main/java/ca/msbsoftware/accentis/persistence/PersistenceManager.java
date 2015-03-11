@@ -1,5 +1,6 @@
 package ca.msbsoftware.accentis.persistence;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,19 +9,20 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import ca.msbsoftware.accentis.persistence.pojos.BaseObject;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PersistenceManager {
 
 	private EntityManagerFactory entityManagerFactory;
 	
-	//private Logger logger = LoggerFactory.getLogger(getClass());
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private ThreadLocal<EntityManager> entityManagers = new ThreadLocal<EntityManager>() {
 		@Override
@@ -29,8 +31,19 @@ public class PersistenceManager {
 		}
 	};
 	
-	public PersistenceManager(EntityManagerFactory factory) {
+	protected PersistenceManager(EntityManagerFactory factory) {
 		entityManagerFactory = factory;
+	}
+	
+	public PersistenceManager(char[] password, File file) {
+		this(Persistence.createEntityManagerFactory("accentis", createPersistenceUnitProperties(password, file)));
+	}
+	
+	private static Map<String, String> createPersistenceUnitProperties(char[] password, File file) {
+		Map<String, String> properties = new HashMap<String, String>();
+		properties.put("openjpa.ConnectionURL", String.format("jdbc:derby:%s;create=true;dataEncryption=true;encryptionAlgorithm=Blowfish/CBC/NoPadding;bootPassword=%s", file.getAbsolutePath(), new String(password)));
+
+		return properties;
 	}
 	
 	public <T extends BaseObject> void create(T object) {
@@ -42,11 +55,11 @@ public class PersistenceManager {
 			
 			em.persist(object);
 			
-			//logger.info("Entity created: %s [%d]", new Object[] { object.getClass().getName(), object.getId() });
+			logger.info("Entity created: {} [{}]", object.getClass().getName(), object.getId());
 			
 			tx.commit();
 		} catch (PersistenceException ex) {
-			//logger.info("Entity create rolled back: %s [%d], Exception message: %s", new Object[] { object.getClass().getName(), object.getId(), ex.getMessage() });
+			logger.info("Entity create rolled back: {} [{}], Exception message: {}", new Object[] { object.getClass().getName(), object.getId(), ex.getMessage() });
 
 			tx.rollback();
 		}
@@ -66,11 +79,11 @@ public class PersistenceManager {
 			
 			results.addAll(query.getResultList());
 			
-			//logger.info("Retrieved %d %s entities with query %s", new Object[] { results.size(), klass.getName(), queryName });
+			logger.info("Retrieved {} {} entities with query {}", new Object[] { results.size(), klass.getName(), queryName });
 			
 			tx.commit();
 		} catch (PersistenceException ex) {
-			//logger.info("Entity retrieval rolled back.  Exception message: %s", ex.getMessage());
+			logger.info("Entity retrieval rolled back.  Exception message: {}", ex.getMessage());
 			
 			tx.rollback();
 		}
@@ -88,11 +101,11 @@ public class PersistenceManager {
 			
 			result = em.merge(object);
 			
-			//logger.info("Entity saved: %s [%d]", new Object[] { object.getClass().getName(), object.getId() });
+			logger.info("Entity saved: {} [{}]", object.getClass().getName(), object.getId());
 			
 			tx.commit();
 		} catch (PersistenceException ex) {
-			//logger.info("Entity save rolled back: %s [%d], Exception message: %s", new Object[] { object.getClass().getName(), object.getId(), ex.getMessage() });
+			logger.info("Entity save rolled back: {} [{}], Exception message: {}", new Object[] { object.getClass().getName(), object.getId(), ex.getMessage() });
 
 			tx.rollback();
 		}
@@ -109,11 +122,11 @@ public class PersistenceManager {
 			
 			em.remove(object);
 			
-			//logger.info("Entity deleted: %s [%d]", new Object[] { object.getClass().getName(), object.getId() });
+			logger.info("Entity deleted: {} [{}]", object.getClass().getName(), object.getId());
 			
 			tx.commit();
 		} catch (PersistenceException ex) {
-			//logger.info("Entity delete rolled back: %s [%d], Exception message: %s", new Object[] { object.getClass().getName(), object.getId(), ex.getMessage() });
+			logger.info("Entity delete rolled back: {} [{}], Exception message: {}", new Object[] { object.getClass().getName(), object.getId(), ex.getMessage() });
 
 			tx.rollback();
 		}
