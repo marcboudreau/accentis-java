@@ -59,4 +59,8 @@ public class Category extends NamedObject {
 		parentCategory = value;		
 		parentCategory.subCategories.add(this);
 	}
+	
+	public List<Category> getSubCategories() {
+		return subCategories;
+	}
 }

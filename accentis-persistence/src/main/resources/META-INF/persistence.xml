@@ -12,6 +12,13 @@
 		<class>ca.msbsoftware.accentis.persistence.pojos.Payee</class>
 		<class>ca.msbsoftware.accentis.persistence.pojos.Transaction</class>
 		<class>ca.msbsoftware.accentis.persistence.pojos.TransactionDetail</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.Image</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.DownloadedTransaction</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.PayeeMapping</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.Schedule</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.ScheduledTransaction</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.SIN</class>
+		<class>ca.msbsoftware.accentis.persistence.pojos.BankAccountIdMapping</class>
 		<properties>
 			<!-- property name="openjpa.ConnectionURL" value="jdbc:derby:accentis;create=true"/-->
 			<property name="openjpa.ConnectionDriverName" value="org.apache.derby.jdbc.EmbeddedDriver"/>

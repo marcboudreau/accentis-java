@@ -2,12 +2,20 @@ package ca.msbsoftware.accentis.persistence.pojos;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({@NamedQuery(name=Institution.GET_ALL_INSTITUTIONS_QUERY,query="SELECT i FROM Institution i")})
 public class Institution extends NamedObject {
 
+	public static final String GET_ALL_INSTITUTIONS_QUERY = "Institution.GET_ALL_INSTITUTIONS_QUERY";
+	
 	@Basic
 	private String contactName;
+	
+	@Basic
+	private String phoneNumber;
 	
 	@Basic
 	private String mailingAddress;
@@ -24,6 +32,14 @@ public class Institution extends NamedObject {
 	
 	public void setContactName(String value) {
 		contactName = value;
+	}
+	
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	
+	public void setPhoneNumber(String value) {
+		phoneNumber = value;
 	}
 	
 	public String getMailingAddress() {

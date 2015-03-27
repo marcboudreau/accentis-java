@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.msbsoftware.accentis.persistence.database.MemoryDatabase;
 import ca.msbsoftware.accentis.persistence.pojos.Account;
 import ca.msbsoftware.accentis.persistence.pojos.Individual;
 
@@ -19,7 +20,7 @@ public class PersistenceManagerTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		manager = new MemoryPersistenceManager();
+		manager = new PersistenceManager(new MemoryDatabase(), null);
 	}
 	
 	@After

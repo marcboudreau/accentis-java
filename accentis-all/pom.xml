@@ -11,5 +11,11 @@
   <modules>
   	<module>../accentis-parent</module>
   	<module>../accentis-persistence</module>
+  	<module>../accentis-gui</module>
+  	<module>../accentis-importer</module>
+  	<module>../accentis-ofx102</module>
+  	<module>../accentis-ofxparser</module>
+  	<module>../accentis-sgmlp</module>
+  	<module>../accentis-utils</module>
   </modules>
 </project>

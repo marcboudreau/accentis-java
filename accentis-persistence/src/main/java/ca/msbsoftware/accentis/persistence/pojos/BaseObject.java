@@ -4,6 +4,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PostLoad;
+import javax.persistence.PostPersist;
+import javax.persistence.PostRemove;
+import javax.persistence.PostUpdate;
+
+import ca.msbsoftware.accentis.persistence.listeners.PojoListenerManager;
 
 @MappedSuperclass
 public class BaseObject {
@@ -24,5 +30,25 @@ public class BaseObject {
 			return ((BaseObject) o).getId() == getId();
 		
 		return false;
+	}
+	
+	@PostPersist
+	public void objectCreated() {
+		PojoListenerManager.getInstance().objectCreated(this);
+	}
+	
+	@PostRemove
+	public void objectDeleted() {
+		PojoListenerManager.getInstance().objectDeleted(this);
+	}
+	
+	@PostUpdate
+	public void objectSaved() {
+		PojoListenerManager.getInstance().objectSaved(this);
+	}
+	
+	@PostLoad
+	public void objectRefreshed() {
+		PojoListenerManager.getInstance().objectRefreshed(this);
 	}
 }

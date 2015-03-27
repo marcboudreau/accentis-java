@@ -1,10 +1,13 @@
 package ca.msbsoftware.accentis.persistence;
 
-import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,13 +17,21 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import ca.msbsoftware.accentis.persistence.pojos.BaseObject;
+import org.apache.openjpa.persistence.OpenJPAEntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ca.msbsoftware.accentis.persistence.database.Database;
+import ca.msbsoftware.accentis.persistence.database.DatabaseException;
+import ca.msbsoftware.accentis.persistence.database.DatabaseWrongPasswordException;
+import ca.msbsoftware.accentis.persistence.listeners.IPojoListener;
+import ca.msbsoftware.accentis.persistence.pojos.BaseObject;
 
 public class PersistenceManager {
 
 	private EntityManagerFactory entityManagerFactory;
+	
+	private Database database;
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -30,18 +41,29 @@ public class PersistenceManager {
 			return entityManagerFactory.createEntityManager();
 		}
 	};
-	
+
 	protected PersistenceManager(EntityManagerFactory factory) {
 		entityManagerFactory = factory;
 	}
 	
-	public PersistenceManager(char[] password, File file) {
-		this(Persistence.createEntityManagerFactory("accentis", createPersistenceUnitProperties(password, file)));
+	public PersistenceManager(Database db, char[] password) throws DatabaseWrongPasswordException {
+		entityManagerFactory = Persistence.createEntityManagerFactory("accentis", createPersistenceUnitProperties(db, password));
+		
+		try {
+			entityManagers.get();
+		} catch (PersistenceException ex) {
+			if (null != ex.getCause() && ex.getCause().getClass() == SQLException.class)
+				if (((SQLException) ex.getCause()).getSQLState().equals("XBCXA"))
+					throw new DatabaseWrongPasswordException();
+			
+			throw ex;
+		}
+		database = db;
 	}
 	
-	private static Map<String, String> createPersistenceUnitProperties(char[] password, File file) {
+	private static Map<String, String> createPersistenceUnitProperties(Database db, char[] password) {
 		Map<String, String> properties = new HashMap<String, String>();
-		properties.put("openjpa.ConnectionURL", String.format("jdbc:derby:%s;create=true;dataEncryption=true;encryptionAlgorithm=Blowfish/CBC/NoPadding;bootPassword=%s", file.getAbsolutePath(), new String(password)));
+		properties.put("openjpa.ConnectionURL", db.getConnectionURL(password));
 
 		return properties;
 	}
@@ -131,6 +153,25 @@ public class PersistenceManager {
 			tx.rollback();
 		}
 	}
+	
+	public <T extends BaseObject> void refresh(T object) {
+		EntityManager em = entityManagers.get();
+		EntityTransaction tx = em.getTransaction();
+		
+		try {
+			tx.begin();
+			
+			em.refresh(object);
+			
+			logger.info("Entity refreshed: {} [{}]", object.getClass(), object.getId());
+			
+			tx.commit();
+		} catch (PersistenceException ex) {
+			logger.info("Entity refresh rolled back: {} [{}], Exception message: {}", new Object[] { object.getClass().getName(), object.getId(), ex.getMessage() });
+			
+			tx.rollback();
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	public void clear() {
@@ -166,6 +207,15 @@ public class PersistenceManager {
 		} catch (PersistenceException ex) {
 			tx.rollback();
 		}
+	}
+	
+	public void changePassword(char[] oldPassword, char[] newPassword) throws DatabaseException {
+		Connection connection = (Connection) ((OpenJPAEntityManager) entityManagers.get()).getConnection();
+		database.changePassword(connection, oldPassword, newPassword);
+	}
+	
+	public String getDatabaseLocation() {
+		return database.getLocation();
 	}
 	
 	public static final Map<String, Object> EMPTY_PARAMETER_MAP = new HashMap<String, Object>();

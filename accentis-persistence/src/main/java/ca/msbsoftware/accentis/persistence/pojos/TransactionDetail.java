@@ -74,4 +74,12 @@ public class TransactionDetail extends BaseObject {
 	public void setDescription(String value) {
 		description = value;
 	}
+	
+	public BigDecimal getValue() {
+		BigDecimal value = getAmount();
+		if (null != getCategory() && CategoryType.EXPENSE.equals(getCategory().getType()))
+			value = value.negate();
+		
+		return value;
+	}
 }
