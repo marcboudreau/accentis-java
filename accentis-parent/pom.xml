@@ -39,4 +39,21 @@
   		</dependency>
   	</dependencies>
   </dependencyManagement>
+  <url>www.msbsoftware.ca</url>
+  <organization>
+  	<name>MSB Software</name>
+  	<url>www.msbsoftware.ca</url>
+  </organization>
+  <distributionManagement>
+    <repository>
+  	  <id>msb-release</id>
+  	  <name>MSB Releases</name>
+  	  <url>https://www.msbsoftware.ca/nexus/content/repositories/releases</url>
+  	</repository>
+  	<snapshotRepository>
+  	  <id>msb-snapshot</id>
+  	  <name>MSB Snapshots</name>
+  	  <url>https://www.msbsoftware.ca/nexus/content/repositories/snapshots</url>
+  	</snapshotRepository>
+  </distributionManagement>
 </project>
