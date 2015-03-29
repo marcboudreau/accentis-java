@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ca.msbsoftware.accentis</groupId>
   <artifactId>accentis-parent</artifactId>
-  <version>${accentis.version}</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Accentis Parent POM</name>
   <build>
@@ -46,12 +46,12 @@
   </organization>
   <distributionManagement>
     <repository>
-  	  <id>msb-release</id>
+  	  <id>msb-releases</id>
   	  <name>MSB Releases</name>
   	  <url>https://www.msbsoftware.ca/nexus/content/repositories/releases</url>
   	</repository>
   	<snapshotRepository>
-  	  <id>msb-snapshot</id>
+  	  <id>msb-snapshots</id>
   	  <name>MSB Snapshots</name>
   	  <url>https://www.msbsoftware.ca/nexus/content/repositories/snapshots</url>
   	</snapshotRepository>
