@@ -6,7 +6,9 @@ import static org.junit.Assert.assertNull;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,9 +18,18 @@ public class DateUtilsTest {
 
 	private Calendar calendar;
 
+	private Locale locale;
+	
 	@Before
 	public void setUp() {
 		calendar = Calendar.getInstance();
+		locale = Locale.getDefault();
+		Locale.setDefault(Locale.US);
+	}
+	
+	@After
+	public void tearDown() {
+		Locale.setDefault(locale);
 	}
 
 	@Test
@@ -57,7 +68,7 @@ public class DateUtilsTest {
 
 		final Date expected = calendar.getTime();
 
-		assertEquals(expected, DateUtils.parse("21/07/1969 2:56")); //$NON-NLS-1$
+		assertEquals(expected, DateUtils.parse("7/21/1969 2:56")); //$NON-NLS-1$
 	}
 	
 	@Test
@@ -80,7 +91,7 @@ public class DateUtilsTest {
 		calendar.set(1969, 6, 21, 2, 57, 0);
 		final Date date = calendar.getTime();
 		
-		assertEquals("21/07/69", DateUtils.format(date)); //$NON-NLS-1$
+		assertEquals("7/21/69", DateUtils.format(date)); //$NON-NLS-1$
 	}
 }
 
