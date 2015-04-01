@@ -57,7 +57,7 @@ public class DateUtilsTest {
 
 		final Date expected = calendar.getTime();
 
-		assertEquals(expected, DateUtils.parse("7/21/1969 2:56")); //$NON-NLS-1$
+		assertEquals(expected, DateUtils.parse("21/07/1969 2:56")); //$NON-NLS-1$
 	}
 	
 	@Test
@@ -80,7 +80,7 @@ public class DateUtilsTest {
 		calendar.set(1969, 6, 21, 2, 57, 0);
 		final Date date = calendar.getTime();
 		
-		assertEquals("7/21/69", DateUtils.format(date)); //$NON-NLS-1$
+		assertEquals("21/07/69", DateUtils.format(date)); //$NON-NLS-1$
 	}
 }
 

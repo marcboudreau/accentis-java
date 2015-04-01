@@ -12,7 +12,7 @@ public class HashUtil {
 		@Override
 		protected MessageDigest initialValue() {
 			try {
-				return MessageDigest.getInstance("SHA-2"); //$NON-NLS-1$
+				return MessageDigest.getInstance("SHA-256"); //$NON-NLS-1$
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 				return null;
