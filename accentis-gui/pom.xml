@@ -4,6 +4,7 @@
     <groupId>ca.msbsoftware.accentis</groupId>
     <artifactId>accentis-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../accentis-parent</relativePath>
   </parent>
   <artifactId>accentis-gui</artifactId>
   <name>Accentis GUI</name>
@@ -31,13 +32,6 @@
     	<artifactId>commons-collections</artifactId>
     	<version>3.2.1</version>
     </dependency>
-    <!--
-    <dependency>
-    	<groupId>org.msb.accentis</groupId>
-    	<artifactId>accentis-importer</artifactId>
-    	<version>${accentis.version}</version>
-    </dependency>
-    -->
     <dependency>
     	<groupId>ca.msbsoftware.accentis</groupId>
     	<artifactId>accentis-importer</artifactId>
@@ -46,24 +40,6 @@
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-          	<id>default-assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <configuration>
-              <descriptors>
-                <descriptor>assembly-linux.xml</descriptor>
-                <descriptor>assembly-win.xml</descriptor>
-              </descriptors>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
       	<artifactId>maven-jar-plugin</artifactId>
       	<executions>

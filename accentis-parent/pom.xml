@@ -40,10 +40,33 @@
   	</dependencies>
   </dependencyManagement>
   <url>www.msbsoftware.ca</url>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
   <organization>
   	<name>MSB Software</name>
-  	<url>www.msbsoftware.ca</url>
+  	<url>https://www.msbsoftware.ca</url>
   </organization>
+  <developers>
+    <developer>
+      <id>boudreaum</id>
+      <name>Marc Boudreau</name>
+      <email>marc.a.boudreau@gmail.com</email>
+      <timezone>America/Toronto</timezone>
+      <organization>MSB Software</organization>
+      <organizationUrl>https://www.msbsoftware.ca/</organizationUrl>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+      <url>https://www.msbsoftware.ca/developers/boudreaum</url>
+    </developer>
+  </developers>
   <distributionManagement>
     <repository>
   	  <id>msb-releases</id>
@@ -56,4 +79,14 @@
   	  <url>https://www.msbsoftware.ca/nexus/content/repositories/snapshots</url>
   	</snapshotRepository>
   </distributionManagement>
+  <ciManagement>
+    <system>jenkins</system>
+    <url>https://www.msbsoftware.ca/jenkins</url>
+  </ciManagement>
+  <scm>
+    <connection>scm:git:https://github.com/marcboudreau/accentis.git</connection>
+    <developerConnection>scm:git:https://github.com/marcboudreau/accentis.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/marcboudreau/accentis.git</url>
+  </scm>
 </project>

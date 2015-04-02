@@ -4,6 +4,7 @@
     <groupId>ca.msbsoftware.accentis</groupId>
     <artifactId>accentis-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../accentis-parent</relativePath>
   </parent>
   <artifactId>accentis-all</artifactId>
   <packaging>pom</packaging>
@@ -17,5 +18,6 @@
   	<module>../accentis-ofxparser</module>
   	<module>../accentis-sgmlp</module>
   	<module>../accentis-utils</module>
+  	<module>../accentis-app</module>
   </modules>
 </project>

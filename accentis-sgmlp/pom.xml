@@ -4,6 +4,7 @@
 		<artifactId>accentis-parent</artifactId>
 		<groupId>ca.msbsoftware.accentis</groupId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../accentis-parent</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
   <artifactId>accentis-sgmlp</artifactId>

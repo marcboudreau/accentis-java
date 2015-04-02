@@ -6,6 +6,7 @@
     <groupId>ca.msbsoftware.accentis</groupId>
     <artifactId>accentis-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../accentis-parent</relativePath>
   </parent>
 
   <artifactId>accentis-importer</artifactId>
